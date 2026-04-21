@@ -4,9 +4,15 @@ function App() {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/players')
+    fetch('https://api.sleeper.app/v1/players/nfl')
       .then(res => res.json())
-      .then(setPlayers)
+      .then(data => {
+        const qbs = Object.values(data)
+          .filter(p => p.position === 'QB' && p.active)
+          .sort((a, b) => (a.search_rank || 9999) - (b.search_rank || 9999))
+          .slice(0, 25);
+        setPlayers(qbs);
+      })
       .catch(console.error);
   }, []);
 
