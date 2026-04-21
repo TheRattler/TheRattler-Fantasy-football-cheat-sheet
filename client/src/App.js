@@ -4,7 +4,7 @@ function App() {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/players')
+    fetch('/.netlify/functions/players')
       .then(res => res.json())
       .then(setPlayers)
       .catch(console.error);
